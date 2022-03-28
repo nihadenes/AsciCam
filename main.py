@@ -1,15 +1,15 @@
 # ------------------------- [ Main Project File | Coding: utf-8 ] ------------------------- #
 # Project: AsciCam                                                                          #
-# File: main.py	                                                                            #
+# File: main.py                                                                             #
 # Python Version: 3.10.2 - Tested: 3.10.2 - All others are untested.                        #
-# The libraries should get installed among the integrated libraries: Libraries			    #
+# The libraries should get installed among the integrated libraries: cv2, pillow            #
 # ----------------------------------------- [ ! ] ----------------------------------------- #
 # This code doesn't have any errors. if you got an error, check syntax and python version.  #
 # ----------------------------------------- [ ! ] ----------------------------------------- #
 # Author: nihadenes - <nihadenesvideo@gmail.com>                                            #
 # Links: <https://github.com/nihadenes>                                                     #
-# Date: Date                                                                          		#
-# License: License																			#
+# Date: 3/28/2022                                                                           #
+# License: MIT License                                                                      #
 # --------------------------------------- [ Enjoy ] --------------------------------------- #
 
 from PIL import Image, ImageGrab
@@ -81,10 +81,8 @@ def changeFontSize(size=2): # Changes the font size to *size* pixels (Kind of, b
 
 
 def print_large_block(text):
-    clearConsole()
-    print('', end='', flush=True)
-    sys.stdout.flush()
-    print(text, end="\r", flush=True)
+    print("", end="\r")
+    print(text, end="\r")
 
 
 def get_ascii_from_image(im):
@@ -98,7 +96,7 @@ def get_ascii_from_image(im):
             char_list_pos = int((len(char_list)-1)*pix/255)
             line.append(char_list[char_list_pos])
         lines.append(''.join(line))
-    return '\n'.join(lines)
+    return ('\n' + ("\n" if fontsize not in finefont else "")).join(lines)
 
 
 def get_video_frms(path, format="cv2"):
@@ -125,10 +123,10 @@ def cv2_to_PIL(frame):
 
 def print_ascii_from_im(im):
     global horizontal, vertical, set_screen
-    horizontal = int(vertical*horizontal_scale*im.size[0]/im.size[1])
+    horizontal = int(vertical*2*im.size[0]/im.size[1])
     if set_screen == 0:
         set_screen = 1
-        setscreen(horizontal, vertical)
+        setscreen(horizontal, vertical * (2 if fontsize not in finefont else 1))
     im = im.resize((horizontal, vertical))
     ascii_art = get_ascii_from_image(im)+'\n'
     print_large_block(ascii_art)
@@ -139,12 +137,16 @@ def main():
 
         
 if __name__ == '__main__':
-    vertical = 125 # Shouldn't be less than 50.
-    fontsize = 1
-    camera = 0
+    vertical = 150
+    finefont = [1, 3]
+    fontsize = 4 # 3 is buggy, so don't use 3.
+    camera = 1
     changeFontSize(size=fontsize)
     char_list = "".join([' ', '.', "'", ',', ':', ';', 'c', 'l','x', 'o', 'k', 'X', 'd', 'O', '0', 'K', 'N'])
     horizontal_scale = 2
     set_screen = 0
     mirrored = 0
     main()
+
+
+

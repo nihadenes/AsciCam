@@ -12,8 +12,8 @@
 # License: MIT License                                                                      #
 # --------------------------------------- [ Enjoy ] --------------------------------------- #
 
-from PIL import Image, ImageGrab
-import cv2, sys, os
+import cv2, os
+from PIL import Image
 
 
 def setscreen(col, line):
@@ -23,12 +23,12 @@ def setscreen(col, line):
         print("Failed to set screen.")
 
 
-def changeFontSize(size=2): # Changes the font size to *size* pixels (Kind of, but not really.)
+def changeFontSize(size=2):  # Changes the font size to *size* pixels (Kind of, but not really.)
     from ctypes import POINTER, WinDLL, Structure, sizeof, byref
     from ctypes.wintypes import BOOL, SHORT, WCHAR, UINT, ULONG, DWORD, HANDLE
 
     LF_FACESIZE, STD_OUTPUT_HANDLE = 32, -11
-    
+
     class COORD(Structure):
         _fields_ = [
             ("X", SHORT),
@@ -85,8 +85,8 @@ def get_ascii_from_image(im):
     for y in range(im.size[1]):
         line = []
         for x in x_range:
-            pix = sum(im.getpixel((x, y)))/3
-            char_list_pos = int((len(char_list)-1)*pix/255)
+            pix = sum(im.getpixel((x, y))) / 3
+            char_list_pos = int((len(char_list) - 1) * pix / 255)
             line.append(char_list[char_list_pos])
         lines.append(''.join(line))
     return ('\n' + ("\n" if fontsize != 1 else "")).join(lines)
@@ -108,37 +108,35 @@ def get_video_frms(path, format="cv2"):
 
 
 def cv2_to_PIL(frame):
-    color_mode_converted = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    pil_im = Image.fromarray(color_mode_converted)
-    return pil_im
-
+    return Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
 
 
 def print_ascii_from_im(im):
     global horizontal, vertical, set_screen
-    horizontal = int(vertical*2*im.size[0]/im.size[1])
+    horizontal = int(vertical * 2 * im.size[0] / im.size[1])
     if set_screen == 0:
         set_screen = 1
         setscreen(horizontal, vertical * (2 if fontsize != 1 else 1))
     im = im.resize((horizontal, vertical))
-    ascii_art = get_ascii_from_image(im)+'\n'
-    print_large_block(ascii_art)
+    print_large_block(get_ascii_from_image(im) + '\n')
 
 
 def main():
     [print_ascii_from_im(im) for im in get_video_frms(camera, 'PIL')]
 
-        
+
 if __name__ == '__main__':
+    camera = 0
+    mirrored = 1
     vertical = 100
-    fontsize = 1 # 3 is buggy, so don't use 3.
-    camera = 1
-    changeFontSize(size=fontsize)
-    char_list = "".join([' ', '.', "'", ',', ':', ';', 'c', 'l','x', 'o', 'k', 'X', 'd', 'O', '0', 'K', 'N'])
-    horizontal_scale = 2
-    set_screen = 0
-    mirrored = 0
+    fontsize = 1  # 3 is buggy, so don't use 3.
+
+    set_screen = 0     
+    char_list = "".join([' ', '.', "'", ',', ':', ';', 'c', 'l', 'x', 'o', 'k', 'X', 'd', 'O', '0', 'K', 'N'])
+
+    try:
+        changeFontSize(size=fontsize)
+    except:
+        print("Failed to set font size.")
+
     main()
-
-
-

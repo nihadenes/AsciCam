@@ -21,13 +21,6 @@ def setscreen(col, line):
         os.system(f'mode con: cols={col} lines={line}')
     except:
         print("Failed to set screen.")
-        
-
-def clearConsole():
-    command = 'clear'
-    if os.name in ('nt', 'dos'):  # If Machine is running on Windows, use cls.
-        command = 'cls'
-    os.system(command)
 
 
 def changeFontSize(size=2): # Changes the font size to *size* pixels (Kind of, but not really.)
@@ -96,7 +89,7 @@ def get_ascii_from_image(im):
             char_list_pos = int((len(char_list)-1)*pix/255)
             line.append(char_list[char_list_pos])
         lines.append(''.join(line))
-    return ('\n' + ("\n" if fontsize not in finefont else "")).join(lines)
+    return ('\n' + ("\n" if fontsize != 1 else "")).join(lines)
 
 
 def get_video_frms(path, format="cv2"):
@@ -126,7 +119,7 @@ def print_ascii_from_im(im):
     horizontal = int(vertical*2*im.size[0]/im.size[1])
     if set_screen == 0:
         set_screen = 1
-        setscreen(horizontal, vertical * (2 if fontsize not in finefont else 1))
+        setscreen(horizontal, vertical * (2 if fontsize != 1 else 1))
     im = im.resize((horizontal, vertical))
     ascii_art = get_ascii_from_image(im)+'\n'
     print_large_block(ascii_art)
@@ -137,9 +130,8 @@ def main():
 
         
 if __name__ == '__main__':
-    vertical = 150
-    finefont = [1, 3]
-    fontsize = 4 # 3 is buggy, so don't use 3.
+    vertical = 100
+    fontsize = 1 # 3 is buggy, so don't use 3.
     camera = 1
     changeFontSize(size=fontsize)
     char_list = "".join([' ', '.', "'", ',', ':', ';', 'c', 'l','x', 'o', 'k', 'X', 'd', 'O', '0', 'K', 'N'])

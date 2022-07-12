@@ -22,7 +22,7 @@ There are configuration vaiables that you can change between 129. and 135. lines
 ```
 
     camera: Which camera to use? (As a number)
-    mirrored: Mirror the camerra. (1 or 0)
+    mirrored: Mirror the camera. (1 or 0)
     vertical: Character number in a row.
     fontsize: Fontsize of the terminal for smooth views. (Doesn't work in linux, don't use "3" because it's buggy right now.)
 

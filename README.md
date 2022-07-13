@@ -15,7 +15,7 @@ Now that's it! You should be able to run the code.
 
 ## Configurating the code.
 
-There are configuration vaiables that you can change between 129. and 135. lines.
+There are configuration variables that you can change between 129. and 135. lines.
 
 ### Meanings of the configuration variables.
 

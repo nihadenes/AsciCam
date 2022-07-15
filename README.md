@@ -18,7 +18,7 @@ Now that's it! You should be able to run the code.
 
 ![Screenshot_3](https://user-images.githubusercontent.com/91975592/179146595-7679749c-0ac8-41b3-b051-3bd611d51082.png)
 
-(Shot by Logitech C525)
+(Shot via program with Logitech C525)
 
 ## Configurating the code.
 

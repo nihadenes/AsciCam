@@ -20,6 +20,9 @@ Now that's it! You should be able to run the code.
 
 (Shot via program with Logitech C525)
 
+Also, you can have fun with this program as using it as your webcam output via OBS.
+(You can lower the "vertical" variable to increase FPS.)
+
 ## Configurating the code.
 
 There are configuration variables that you can change between 129. and 135. lines.
